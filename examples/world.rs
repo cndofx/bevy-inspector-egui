@@ -3,7 +3,7 @@ use bevy_inspector_egui::{widgets::ResourceInspector, Inspectable, InspectorPlug
 use bevy_inspector_egui::{InspectableRegistry, WorldInspectorParams, WorldInspectorPlugin};
 
 fn main() {
-    let mut app = App::build();
+    let mut app = App::new();
 
     app.insert_resource(Msaa { samples: 4 })
         .add_plugins(DefaultPlugins)
@@ -17,10 +17,7 @@ fn main() {
         .add_startup_system(setup.system());
 
     // getting registry from world
-    let mut registry = app
-        .world_mut()
-        .get_resource_mut::<InspectableRegistry>()
-        .unwrap();
+    let mut registry = app.world.get_resource_mut::<InspectableRegistry>().unwrap();
 
     // registering custom component to be able to edit it in inspector
     registry.register::<MyInspectableComponent>();
