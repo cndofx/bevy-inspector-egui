@@ -13,6 +13,7 @@ pub struct InspectorPlugin<T> {
     marker: PhantomData<T>,
     exclusive_access: bool,
     initial_value: Option<Box<dyn Fn(&mut World) -> T + Send + Sync + 'static>>,
+    initial_window_open: bool,
     window_id: WindowId,
 }
 
@@ -29,6 +30,7 @@ impl<T: FromWorld + Send + Sync + 'static> InspectorPlugin<T> {
             exclusive_access: true,
             marker: PhantomData,
             initial_value: Some(Box::new(T::from_world)),
+            initial_window_open: true,
             window_id: WindowId::primary(),
         }
     }
@@ -41,6 +43,7 @@ impl<T> InspectorPlugin<T> {
             marker: PhantomData,
             exclusive_access: true,
             initial_value: None,
+            initial_window_open: true,
             window_id: WindowId::primary(),
         }
     }
@@ -58,6 +61,14 @@ impl<T> InspectorPlugin<T> {
     pub fn on_window(self, window_id: WindowId) -> Self {
         InspectorPlugin { window_id, ..self }
     }
+
+    /// Sets the window the inspector should be displayed on
+    pub fn open(self, window_open: bool) -> Self {
+        InspectorPlugin {
+            initial_window_open: window_open,
+            ..self
+        }
+    }
 }
 
 #[derive(Clone)]
@@ -72,13 +83,13 @@ pub struct InspectorWindowData {
 }
 #[derive(Default)]
 /// Can be used to control whether inspector windows are shown
-pub struct InspectorWindows(bevy::utils::HashMap<TypeId, InspectorWindowData>);
+pub struct InspectorWindows(pub bevy::utils::HashMap<TypeId, InspectorWindowData>);
 impl InspectorWindows {
-    fn insert<T: 'static>(&mut self, name: String, window_id: WindowId) {
+    fn insert<T: 'static>(&mut self, name: String, window_id: WindowId, window_open: bool) {
         let data = InspectorWindowData {
             name,
             window_id,
-            visible: true,
+            visible: window_open,
         };
         self.0.insert(TypeId::of::<T>(), data);
     }
@@ -162,10 +173,10 @@ where
             if inspector_windows.contains_name(full_type_name) {
                 panic!("two types with different type_id but same type_name");
             } else {
-                inspector_windows.insert::<T>(full_type_name.into(), self.window_id);
+                inspector_windows.insert::<T>(full_type_name.into(), self.window_id, self.initial_window_open);
             }
         } else {
-            inspector_windows.insert::<T>(type_name, self.window_id);
+            inspector_windows.insert::<T>(type_name, self.window_id, self.initial_window_open);
         }
     }
 }
