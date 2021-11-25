@@ -26,8 +26,8 @@ clipboard = ["bevy_egui/manage_clipboard"]
 nightly = []
 
 [dependencies]
-bevy = { git = "https://github.com/bevyengine/bevy", branch = "pipelined-rendering", default-features = false, features = ["render", "bevy_render2", "bevy_pbr2"] }
-bevy_egui = { git = "https://github.com/jakobhellermann/bevy_egui", branch = "bevy-pipelined", default-features = false, features = ["open_url"] }
+bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = ["render", "bevy_render2", "bevy_pbr2"] }
+bevy_egui = { git = "https://github.com/slyedoc/bevy_egui", branch = "pipelined", default-features = false, features = ["open_url"] }
 emath = "0.14"
 pretty-type-name = "1.0"
 image = { version = "0.23", default-features = false }
@@ -39,7 +39,7 @@ bevy-inspector-egui-derive = { version = "0.6.1", path = "bevy-inspector-egui-de
 rand = "0.8"
 
 [dev-dependencies]
-bevy = { git = "https://github.com/bevyengine/bevy", branch = "pipelined-rendering", default-features = false, features = ["x11", "bevy_winit"] }
+bevy = { git = "https://github.com/bevyengine/bevy", branch = "main" }
 # bevy_mod_picking = { version = "0.4" }
 noise = "0.7"
 once_cell = "1.0"
