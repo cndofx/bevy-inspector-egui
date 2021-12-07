@@ -220,6 +220,7 @@ impl Inspectable for Color {
         }
     }
 }
+
 impl Inspectable for bevy::render2::color::Color {
     type Attributes = ColorAttributes;
 
@@ -262,6 +263,14 @@ impl Inspectable for AmbientLight {
     }
 }
 impl Inspectable for ClearColor {
+    type Attributes = <Color as Inspectable>::Attributes;
+
+    fn ui(&mut self, ui: &mut egui::Ui, options: Self::Attributes, context: &Context) -> bool {
+        self.0.ui(ui, options, context)
+    }
+}
+
+impl Inspectable for bevy::core_pipeline::ClearColor {
     type Attributes = <Color as Inspectable>::Attributes;
 
     fn ui(&mut self, ui: &mut egui::Ui, options: Self::Attributes, context: &Context) -> bool {
