@@ -26,7 +26,7 @@ clipboard = ["bevy_egui/manage_clipboard"]
 nightly = []
 
 [dependencies]
-bevy = { version = "0.5", default-features = false, features = [ "bevy_render2", "bevy_pbr2"] }
+bevy = { version = "0.5", default-features = false, features = [ "render", "bevy_render2", "bevy_pbr2"] }
 bevy_egui = { version = "0.7.1", default-features = false, features = ["open_url"] }
 emath = "0.14"
 pretty-type-name = "1.0"
@@ -59,9 +59,10 @@ required-features = ["bevy/png"]
 [[example]]
 name = "world"
 
+# [patch.crates-io]
+# bevy = { path = "../bevy" }
+# bevy_egui = { path = "../bevy_egui" }
+
 [patch.crates-io]
 bevy = { path = "../bevy" }
-bevy_egui = { path = "../bevy_egui" }
-
-#bevy = { git = "https://github.com/bevyengine/bevy", branch = "main", default-features = false, features = ["render", "bevy_render2", "bevy_pbr2"] }
-#bevy_egui = { git = "https://github.com/slyedoc/bevy_egui", branch = "pipelined", default-features = false, features = ["open_url"] }
+bevy_egui = { git = "https://github.com/slyedoc/bevy_egui", branch = "pipelined" }
