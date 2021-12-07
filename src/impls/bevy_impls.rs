@@ -262,6 +262,18 @@ impl Inspectable for AmbientLight {
         self.brightness.ui(ui, brightness_attributes, context)
     }
 }
+
+impl Inspectable for bevy::pbr2::AmbientLight {
+    type Attributes = <Color as Inspectable>::Attributes;
+
+    fn ui(&mut self, ui: &mut egui::Ui, options: Self::Attributes, context: &Context) -> bool {
+        let brightness_attributes = NumberAttributes::positive().speed(0.01);
+
+        self.color.ui(ui, options, context);
+        self.brightness.ui(ui, brightness_attributes, context)
+    }
+}
+
 impl Inspectable for ClearColor {
     type Attributes = <Color as Inspectable>::Attributes;
 
