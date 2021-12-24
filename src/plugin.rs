@@ -14,6 +14,8 @@ pub struct InspectorPlugin<T> {
     exclusive_access: bool,
     initial_value: Option<Box<dyn Fn(&mut World) -> T + Send + Sync + 'static>>,
     window_id: WindowId,
+    #[allow(dead_code)]
+    open: bool,
 }
 
 impl<T: Default + Send + Sync + 'static> Default for InspectorPlugin<T> {
@@ -30,6 +32,7 @@ impl<T: FromWorld + Send + Sync + 'static> InspectorPlugin<T> {
             marker: PhantomData,
             initial_value: Some(Box::new(T::from_world)),
             window_id: WindowId::primary(),
+            open: true,
         }
     }
 }
@@ -42,6 +45,7 @@ impl<T> InspectorPlugin<T> {
             exclusive_access: true,
             initial_value: None,
             window_id: WindowId::primary(),
+            open: true,
         }
     }
 
@@ -58,6 +62,11 @@ impl<T> InspectorPlugin<T> {
     pub fn on_window(self, window_id: WindowId) -> Self {
         InspectorPlugin { window_id, ..self }
     }
+
+    /// Sets the window the inspector should be displayed on
+    pub fn open(self, open: bool) -> Self {
+        InspectorPlugin { open, ..self }
+    }
 }
 
 #[derive(Clone)]
@@ -72,7 +81,7 @@ pub struct InspectorWindowData {
 }
 #[derive(Default)]
 /// Can be used to control whether inspector windows are shown
-pub struct InspectorWindows(bevy::utils::HashMap<TypeId, InspectorWindowData>);
+pub struct InspectorWindows(pub bevy::utils::HashMap<TypeId, InspectorWindowData>);
 impl InspectorWindows {
     fn insert<T: 'static>(&mut self, name: String, window_id: WindowId) {
         let data = InspectorWindowData {
