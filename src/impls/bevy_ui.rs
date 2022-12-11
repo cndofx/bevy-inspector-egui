@@ -210,3 +210,16 @@ impl Inspectable for Size {
         changed
     }
 }
+
+impl Inspectable for UiScale {
+    type Attributes = <f64 as Inspectable>::Attributes;
+
+    fn ui(
+        &mut self,
+        ui: &mut bevy_egui::egui::Ui,
+        options: Self::Attributes,
+        context: &mut crate::Context,
+    ) -> bool {
+        self.scale.ui(ui, options, context)
+    }
+}
