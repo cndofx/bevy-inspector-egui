@@ -1,0 +1,491 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'bevy-inspector-egui'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "bevy-inspector-egui",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'inspector_options'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=inspector_options",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "inspector_options",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'inspector_options'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=inspector_options",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "inspector_options",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'resource_inspector_manual'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=resource_inspector_manual",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "resource_inspector_manual",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'resource_inspector_manual'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=resource_inspector_manual",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "resource_inspector_manual",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'resource_inspector'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=resource_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "resource_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'resource_inspector'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=resource_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "resource_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'filter_query_inspector'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=filter_query_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "filter_query_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'filter_query_inspector'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=filter_query_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "filter_query_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'asset_inspector'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=asset_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "asset_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'asset_inspector'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=asset_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "asset_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'world_inspector'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=world_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "world_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'world_inspector'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=world_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "world_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'world_inspector_assets'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=world_inspector_assets",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "world_inspector_assets",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'world_inspector_assets'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=world_inspector_assets",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "world_inspector_assets",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'state_inspector'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=state_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "state_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'state_inspector'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=state_inspector",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "state_inspector",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'egui_dock'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=egui_dock",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "egui_dock",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'egui_dock'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=egui_dock",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "egui_dock",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'side_panel'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=side_panel",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "side_panel",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'side_panel'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=side_panel",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "side_panel",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'image_format'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=image_format",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "image_format",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'image_format'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=image_format",
+                    "--package=bevy-inspector-egui"
+                ],
+                "filter": {
+                    "name": "image_format",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'reflect_ignore'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=reflect_ignore",
+                    "--package=bevy-inspector-egui-derive"
+                ],
+                "filter": {
+                    "name": "reflect_ignore",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'inspector_options'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=inspector_options",
+                    "--package=bevy-inspector-egui-derive"
+                ],
+                "filter": {
+                    "name": "inspector_options",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'generic_options'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=generic_options",
+                    "--package=bevy-inspector-egui-derive"
+                ],
+                "filter": {
+                    "name": "generic_options",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

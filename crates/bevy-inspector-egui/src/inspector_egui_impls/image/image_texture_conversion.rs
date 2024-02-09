@@ -190,6 +190,14 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
             )?),
             true,
         ),
+        TextureFormat::Rgba8Unorm => (
+            DynamicImage::ImageRgba8(ImageBuffer::from_raw(
+                image.texture_descriptor.size.width,
+                image.texture_descriptor.size.height,
+                image.data.clone(),
+            )?),
+            false,
+        ),
         _ => return None,
     };
     Some((image, is_srgb))
