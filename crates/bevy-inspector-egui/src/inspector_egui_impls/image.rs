@@ -7,6 +7,7 @@ use std::{
 use bevy_asset::{AssetEvent, Assets, Handle};
 use bevy_ecs::event::EventReader;
 use bevy_egui::EguiUserTextures;
+use bevy_log::info;
 use bevy_reflect::DynamicTypePath;
 use bevy_render::texture::Image;
 use egui::load::SizedTexture;
@@ -152,19 +153,24 @@ fn rescaled_image<'a>(
 
 
 
-pub fn asset_modified(
+pub fn asset_image_modified(
     mut events: EventReader<AssetEvent<Image>>
 ) {
     for event in events.read() {
         match event {
             AssetEvent::Modified { id } => {
-                dbg!( "modifed", id);
-                // let mut scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
-                // match scaled_down_textures.textures.entry(event.id) {
-                //     Entry::Occupied(_) => todo!(),                    
-                //     _ => {}
-                // }
-                // scaled_down_textures.rescaled_textures.remove(handle);
+                
+                let mut scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
+                let mut clear = Vec::new();
+                for (base, scaled_down) in &scaled_down_textures.textures {
+                    if base.id() == *id {
+                        info!("found modified image, removing scaled down texture");
+                        clear.push(scaled_down.clone());
+                    }
+                }
+                for it in clear {
+                    scaled_down_textures.textures.remove(&it);
+                }
             }
             _ => {}
         }        

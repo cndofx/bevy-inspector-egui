@@ -152,7 +152,7 @@ impl bevy_app::Plugin for DefaultInspectorConfigPlugin {
             return;
         }
 
-        app.add_systems(Update, crate::inspector_egui_impls::asset_modified);
+        app.add_systems(Update, crate::inspector_egui_impls::asset_image_modified);
         
         let type_registry = app.world.resource::<bevy_ecs::prelude::AppTypeRegistry>();
         let mut type_registry = type_registry.write();
