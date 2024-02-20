@@ -152,27 +152,33 @@ fn rescaled_image<'a>(
 }
 
 
-
 pub fn asset_image_modified(
     mut events: EventReader<AssetEvent<Image>>,
-    egui_user_textures: ResMut<EguiUserTextures>,
+    // egui_user_textures: ResMut<EguiUserTextures>,
     mut images: ResMut<Assets<Image>>,
 ) {
     for event in events.read() {
         match event {
             AssetEvent::Modified { id } => {
+                let to_remove: Vec<(Handle<Image>, Handle<Image>)> = {
+                    let scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
+                    scaled_down_textures.textures.iter()
+                        .filter_map(|(base, scaled_down)| {
+                            if base.id() == *id {
+                                Some((base.clone(), scaled_down.clone()))
+                            } else {
+                                None
+                            }
+                        })
+                        .collect()
+                };
+    
+                // Now operate outside the lock
                 let mut scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
-                let mut clear = Vec::new();
-                for (base, scaled_down) in &scaled_down_textures.textures {
-                    if base.id() == *id {
-                        info!("found modified image, adding to remove list");                        
-                        clear.push((base, scaled_down.clone()));
-                    }
-                }
-                for (base, scaled_down) in clear {
+                for (base, scaled_down) in to_remove {
                     scaled_down_textures.textures.remove(&base);
                     scaled_down_textures.rescaled_textures.remove(&scaled_down);
-                    images.remove(scaled_down);                    
+                    images.remove(scaled_down);
                 }
             }
             _ => {}
