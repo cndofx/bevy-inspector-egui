@@ -151,7 +151,7 @@ fn rescaled_image<'a>(
     Some((texture, texture_id))
 }
 
-
+// Add a system to remove rescaled images when the original image is modified
 pub fn asset_image_modified(
     mut events: EventReader<AssetEvent<Image>>,
     // egui_user_textures: ResMut<EguiUserTextures>,

@@ -152,6 +152,7 @@ impl bevy_app::Plugin for DefaultInspectorConfigPlugin {
             return;
         }
 
+        // fix modified images not being updated
         app.add_systems(Update, crate::inspector_egui_impls::asset_image_modified);
         
         let type_registry = app.world.resource::<bevy_ecs::prelude::AppTypeRegistry>();
