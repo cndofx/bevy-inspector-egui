@@ -38,8 +38,6 @@ pub fn image_handle_ui_readonly(
     env: InspectorUi<'_, '_>,
 ) {
     let value = value.downcast_ref::<Handle<Image>>().unwrap();
-    // FIND
-    dbg!(value);
 
     let Some(world) = &mut env.context.world else {
         no_world_in_context(ui, value.reflect_short_type_path());
