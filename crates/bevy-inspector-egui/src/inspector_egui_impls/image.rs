@@ -4,7 +4,8 @@ use std::{
     sync::Mutex,
 };
 
-use bevy_asset::{Assets, Handle};
+use bevy_asset::{AssetEvent, Assets, Handle};
+use bevy_ecs::event::EventReader;
 use bevy_egui::EguiUserTextures;
 use bevy_reflect::DynamicTypePath;
 use bevy_render::texture::Image;
@@ -37,6 +38,9 @@ pub fn image_handle_ui_readonly(
     env: InspectorUi<'_, '_>,
 ) {
     let value = value.downcast_ref::<Handle<Image>>().unwrap();
+    // FIND
+    dbg!(value);
+
     let Some(world) = &mut env.context.world else {
         no_world_in_context(ui, value.reflect_short_type_path());
         return;
@@ -77,6 +81,7 @@ pub fn image_handle_ui_readonly(
 }
 
 static SCALED_DOWN_TEXTURES: Lazy<Mutex<ScaledDownTextures>> = Lazy::new(Default::default);
+
 
 fn show_image(
     image: &Image,
@@ -145,4 +150,25 @@ fn rescaled_image<'a>(
     };
 
     Some((texture, texture_id))
+}
+
+
+
+pub fn asset_modified(
+    mut events: EventReader<AssetEvent<Image>>
+) {
+    for event in events.read() {
+        match event {
+            AssetEvent::Modified { id } => {
+                dbg!( "modifed", id);
+                // let mut scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
+                // match scaled_down_textures.textures.entry(event.id) {
+                //     Entry::Occupied(_) => todo!(),                    
+                //     _ => {}
+                // }
+                // scaled_down_textures.rescaled_textures.remove(handle);
+            }
+            _ => {}
+        }        
+    }
 }

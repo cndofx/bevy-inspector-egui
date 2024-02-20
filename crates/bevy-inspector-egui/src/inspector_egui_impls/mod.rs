@@ -12,6 +12,7 @@ use std::{
 mod bevy_impls;
 mod glam_impls;
 mod image;
+pub use image::asset_modified;
 mod std_impls;
 
 type InspectorEguiImplFn =

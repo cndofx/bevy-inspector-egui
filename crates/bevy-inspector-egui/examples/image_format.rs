@@ -15,10 +15,7 @@ pub struct Configuration {
 }
 
 impl FromWorld for Configuration {
-    fn from_world(world: &mut World) -> Self {
-        // Works, Uses
-        //let asset_server = world.resource::<AssetServer>();
-        //let image_handle = asset_server.load("icon.png");        
+    fn from_world(world: &mut World) -> Self {     
 
         let mut images = world.resource_mut::<Assets<Image>>();
         let image = Image::new_fill(
@@ -29,8 +26,8 @@ impl FromWorld for Configuration {
             },
             TextureDimension::D2,
             &[0, 0, 0, 255],
-            //TextureFormat::Rgba8Unorm, // doesnt works
-            TextureFormat::Rgba8UnormSrgb // works
+            TextureFormat::Rgba8Unorm, // didnt work before, does with patch
+            //TextureFormat::Rgba8UnormSrgb // always works
         );
         let image_handle = images.add(image);
 
