@@ -191,14 +191,50 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
             true,
         ),
         TextureFormat::Rgba8Unorm => (
-            DynamicImage::ImageRgba8(ImageBuffer::from_raw(
+            DynamicImage::ImageLuma8(ImageBuffer::from_raw(
                 image.texture_descriptor.size.width,
                 image.texture_descriptor.size.height,
                 image.data.clone(),
             )?),
             false,
         ),
+        TextureFormat::R32Float => ({
+            use image::Luma;
+            let f32_data = convert_bytes_to_f32(&image.data);
+            let width = image.texture_descriptor.size.width as u32;
+            let height = image.texture_descriptor.size.height as u32;
+            
+            // Create a new ImageBuffer for Luma<u8> (grayscale)
+            let mut imgbuf = ImageBuffer::<Luma<u8>, Vec<u8>>::new(width, height);
+            for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+                let data_index = (y * width + x) as usize;
+                // Normalize and convert the floating-point value to a u8 grayscale value.
+                // Adjust normalization as needed for your specific data range.
+                let normalized_value = normalize_f32_to_u8(f32_data[data_index]);
+                *pixel = Luma([normalized_value]);
+            }
+            image::DynamicImage::ImageLuma8(imgbuf)
+               
+            },
+            false,
+        ),
         _ => return None,
     };
     Some((image, is_srgb))
+}
+
+fn convert_bytes_to_f32(bytes: &[u8]) -> Vec<f32> {
+    // Ensure the bytes length is a multiple of 4 for safe conversion to f32
+    assert!(bytes.len() % 4 == 0, "Data length is not aligned for f32 conversion");
+
+    // SAFETY: We've ensured alignment and size correctness above.
+    // The caller must ensure that the byte slice's lifetime is valid for the conversion.
+    unsafe {
+        std::slice::from_raw_parts(bytes.as_ptr() as *const f32, bytes.len() / 4).to_vec()
+    }
+}
+
+fn normalize_f32_to_u8(value: f32) -> u8 {
+    // Example: clamp value between 0.0 and 1.0 and scale to 0-255
+    (value.clamp(0.0, 1.0) * 255.0) as u8
 }
