@@ -1,8 +1,9 @@
+use bevy_log::warn;
 use bevy_render::{
     render_resource::{Extent3d, TextureDimension, TextureFormat},
     texture::{Image, TextureFormatPixelInfo},
 };
-use image::{DynamicImage, ImageBuffer};
+use image::{DynamicImage, ImageBuffer, Rgba};
 
 /// Converts a [`DynamicImage`] to an [`Image`].
 pub fn from_dynamic(dyn_img: DynamicImage, is_srgb: bool) -> Image {
@@ -191,34 +192,33 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
             true,
         ),
         TextureFormat::Rgba8Unorm => (
-            DynamicImage::ImageLuma8(ImageBuffer::from_raw(
+            DynamicImage::ImageRgba8(ImageBuffer::from_raw(
                 image.texture_descriptor.size.width,
                 image.texture_descriptor.size.height,
                 image.data.clone(),
             )?),
             false,
         ),
-        TextureFormat::R32Float => ({
-            use image::Luma;
+        TextureFormat::R32Float => {
+
             let f32_data = convert_bytes_to_f32(&image.data);
-            let width = image.texture_descriptor.size.width as u32;
-            let height = image.texture_descriptor.size.height as u32;
-            
-            // Create a new ImageBuffer for Luma<u8> (grayscale)
-            let mut imgbuf = ImageBuffer::<Luma<u8>, Vec<u8>>::new(width, height);
+            let width = image.texture_descriptor.size.width;
+            let height = image.texture_descriptor.size.height;
+        
+            let mut imgbuf = ImageBuffer::<image::Rgba<u8>, Vec<u8>>::new(width, height);
+        
             for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
                 let data_index = (y * width + x) as usize;
-                // Normalize and convert the floating-point value to a u8 grayscale value.
-                // Adjust normalization as needed for your specific data range.
-                let normalized_value = normalize_f32_to_u8(f32_data[data_index]);
-                *pixel = Luma([normalized_value]);
+                let intensity = (f32_data[data_index].min(1.0).max(0.0) * 255.0) as u8;
+        
+                *pixel = Rgba([intensity, intensity, intensity, 255]);
             }
-            image::DynamicImage::ImageLuma8(imgbuf)
-               
-            },
-            false,
-        ),
-        _ => return None,
+            ( DynamicImage::ImageRgba8(imgbuf), false)
+        }
+        v @ _ => {
+            warn!("Unsupported texture format, {:?}", v);
+            return None;
+        },
     };
     Some((image, is_srgb))
 }
@@ -232,9 +232,4 @@ fn convert_bytes_to_f32(bytes: &[u8]) -> Vec<f32> {
     unsafe {
         std::slice::from_raw_parts(bytes.as_ptr() as *const f32, bytes.len() / 4).to_vec()
     }
-}
-
-fn normalize_f32_to_u8(value: f32) -> u8 {
-    // Example: clamp value between 0.0 and 1.0 and scale to 0-255
-    (value.clamp(0.0, 1.0) * 255.0) as u8
 }
