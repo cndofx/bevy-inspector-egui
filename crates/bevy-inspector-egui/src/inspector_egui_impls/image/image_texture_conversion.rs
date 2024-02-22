@@ -200,8 +200,10 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
             false,
         ),
         TextureFormat::R32Float => {
+            
+            let f32_data: Vec<f32> =  bevy_core::cast_slice(&image.data).to_owned();           
 
-            let f32_data = convert_bytes_to_f32(&image.data);
+            //let f32_data =  convert_bytes_to_f32(&image.data);
             let width = image.texture_descriptor.size.width;
             let height = image.texture_descriptor.size.height;
         
@@ -209,13 +211,24 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
         
             for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
                 let data_index = (y * width + x) as usize;
-                let intensity = (f32_data[data_index].min(1.0).max(0.0) * 255.0) as u8;
-        
-                *pixel = Rgba([intensity, intensity, intensity, 255]);
+                let value = f32_data[data_index];
+                
+                // Assign colors based on sign
+                let normalized_value = value.clamp(-1.0, 1.0);
+                let (red, green) = if normalized_value > 0.0 {
+                    // Positive values: Map to red, scale intensity by normalized value
+                    (normalized_value * 255.0, 0.0) 
+                } else {
+                    // Negative values: Map to green, scale intensity by absolute value of normalized value
+                    (0.0, normalized_value.abs() * 255.0)
+                };
+
+                *pixel = Rgba([red as u8, green as u8, 0, 255]);
             }
             ( DynamicImage::ImageRgba8(imgbuf), false)
         }
         v @ _ => {
+            // TODO: remove repeating error, but useful for now
             warn!("Unsupported texture format, {:?}", v);
             return None;
         },
