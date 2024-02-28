@@ -144,6 +144,7 @@ pub mod restricted_world_view;
 mod egui_utils;
 mod utils;
 
+use bevy_app::Update;
 pub use bevy_egui;
 pub use egui;
 
@@ -155,6 +156,9 @@ impl bevy_app::Plugin for DefaultInspectorConfigPlugin {
             return;
         }
 
+        // fix modified images not being updated
+        app.add_systems(Update, crate::inspector_egui_impls::asset_image_modified);
+        
         let type_registry = app.world.resource::<bevy_ecs::prelude::AppTypeRegistry>();
         let mut type_registry = type_registry.write();
 

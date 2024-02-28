@@ -4,8 +4,10 @@ use std::{
     sync::Mutex,
 };
 
-use bevy_asset::{Assets, Handle};
+use bevy_asset::{AssetEvent, Assets, Handle};
+use bevy_ecs::{event::EventReader, prelude::ResMut};
 use bevy_egui::EguiUserTextures;
+use bevy_log::info;
 use bevy_reflect::DynamicTypePath;
 use bevy_render::texture::Image;
 use egui::load::SizedTexture;
@@ -76,6 +78,7 @@ impl InspectorPrimitive for Handle<Image> {
 
 static SCALED_DOWN_TEXTURES: Lazy<Mutex<ScaledDownTextures>> = Lazy::new(Default::default);
 
+
 fn show_image(
     image: &Image,
     texture_id: egui::TextureId,
@@ -143,4 +146,39 @@ fn rescaled_image<'a>(
     };
 
     Some((texture, texture_id))
+}
+
+// Add a system to remove rescaled images when the original image is modified
+pub fn asset_image_modified(
+    mut events: EventReader<AssetEvent<Image>>,
+    // egui_user_textures: ResMut<EguiUserTextures>,
+    mut images: ResMut<Assets<Image>>,
+) {
+    for event in events.read() {
+        match event {
+            AssetEvent::Modified { id } => {
+                let to_remove: Vec<(Handle<Image>, Handle<Image>)> = {
+                    let scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
+                    scaled_down_textures.textures.iter()
+                        .filter_map(|(base, scaled_down)| {
+                            if base.id() == *id {
+                                Some((base.clone(), scaled_down.clone()))
+                            } else {
+                                None
+                            }
+                        })
+                        .collect()
+                };
+    
+                // Now operate outside the lock
+                let mut scaled_down_textures = SCALED_DOWN_TEXTURES.lock().unwrap();
+                for (base, scaled_down) in to_remove {
+                    scaled_down_textures.textures.remove(&base);
+                    scaled_down_textures.rescaled_textures.remove(&scaled_down);
+                    images.remove(scaled_down);
+                }
+            }
+            _ => {}
+        }        
+    }
 }
