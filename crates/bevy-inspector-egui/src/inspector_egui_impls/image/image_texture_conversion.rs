@@ -237,14 +237,3 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
     };
     Some((image, is_srgb))
 }
-
-fn convert_bytes_to_f32(bytes: &[u8]) -> Vec<f32> {
-    // Ensure the bytes length is a multiple of 4 for safe conversion to f32
-    assert!(bytes.len() % 4 == 0, "Data length is not aligned for f32 conversion");
-
-    // SAFETY: We've ensured alignment and size correctness above.
-    // The caller must ensure that the byte slice's lifetime is valid for the conversion.
-    unsafe {
-        std::slice::from_raw_parts(bytes.as_ptr() as *const f32, bytes.len() / 4).to_vec()
-    }
-}
