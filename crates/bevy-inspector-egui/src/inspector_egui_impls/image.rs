@@ -7,7 +7,6 @@ use std::{
 use bevy_asset::{AssetEvent, Assets, Handle};
 use bevy_ecs::{event::EventReader, prelude::ResMut};
 use bevy_egui::EguiUserTextures;
-use bevy_log::info;
 use bevy_reflect::DynamicTypePath;
 use bevy_render::texture::Image;
 use egui::load::SizedTexture;

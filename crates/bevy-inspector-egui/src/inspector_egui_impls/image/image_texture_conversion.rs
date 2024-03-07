@@ -216,8 +216,9 @@ pub fn try_into_dynamic(image: &Image) -> Option<(DynamicImage, bool)> {
                 let value = f32_data[data_index];
                 
                 // Assign colors based on sign
-                let normalized_value = value.clamp(-1.0, 1.0);
-                let (red, green) = if normalized_value > 0.0 {
+                let scale = 10.0;
+                let normalized_value = value.clamp(-scale, scale) / scale;
+                let (green, red) = if normalized_value > 0.0 {
                     // Positive values: Map to red, scale intensity by normalized value
                     (normalized_value * 255.0, 0.0) 
                 } else {
