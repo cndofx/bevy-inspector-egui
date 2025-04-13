@@ -17,7 +17,9 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         // if you don't use the `quick` plugins you need to add the `EguiPlugin` and the default inspector settings yourself
-        .add_plugins(EguiPlugin)
+        .add_plugins(EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(DefaultInspectorConfigPlugin)
         // insert and register resource
         .init_resource::<Configuration>()

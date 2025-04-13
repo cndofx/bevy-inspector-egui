@@ -8,7 +8,9 @@ use bevy_window::PrimaryWindow;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugins(EguiPlugin)
+        .add_plugins(EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(DefaultInspectorConfigPlugin)
         .add_systems(Startup, setup)
         .add_systems(Update, rotator_system)

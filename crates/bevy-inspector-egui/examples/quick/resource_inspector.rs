@@ -16,6 +16,9 @@ struct Configuration {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugins(bevy_egui::EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(
             ResourceInspectorPlugin::<Configuration>::default()
                 .run_if(input_toggle_active(true, KeyCode::Escape)),

@@ -77,13 +77,14 @@ impl WorldInspectorPlugin {
 impl Plugin for WorldInspectorPlugin {
     fn build(&self, app: &mut bevy_app::App) {
         check_default_plugins(app, "WorldInspectorPlugin");
+        assert!(app.is_plugin_added::<EguiPlugin>());
 
         if !app.is_plugin_added::<DefaultInspectorConfigPlugin>() {
             app.add_plugins(DefaultInspectorConfigPlugin);
         }
-        if !app.is_plugin_added::<EguiPlugin>() {
-            app.add_plugins(EguiPlugin);
-        }
+        // if !app.is_plugin_added::<EguiPlugin>() {
+        //     app.add_plugins(EguiPlugin);
+        // }
         if !app.is_plugin_added::<InspectSchedulePlugin>() {
             app.add_plugins(InspectSchedulePlugin);
         }
@@ -178,13 +179,14 @@ impl<T> ResourceInspectorPlugin<T> {
 impl<T: Resource + Reflect> Plugin for ResourceInspectorPlugin<T> {
     fn build(&self, app: &mut bevy_app::App) {
         check_default_plugins(app, "ResourceInspectorPlugin");
+        assert!(app.is_plugin_added::<EguiPlugin>());
 
         if !app.is_plugin_added::<DefaultInspectorConfigPlugin>() {
             app.add_plugins(DefaultInspectorConfigPlugin);
         }
-        if !app.is_plugin_added::<EguiPlugin>() {
-            app.add_plugins(EguiPlugin);
-        }
+        // if !app.is_plugin_added::<EguiPlugin>() {
+        //     app.add_plugins(EguiPlugin);
+        // }
         if !app.is_plugin_added::<InspectSchedulePlugin>() {
             app.add_plugins(InspectSchedulePlugin);
         }
@@ -277,13 +279,14 @@ impl<T> StateInspectorPlugin<T> {
 impl<T: FreelyMutableState + Reflect> Plugin for StateInspectorPlugin<T> {
     fn build(&self, app: &mut bevy_app::App) {
         check_default_plugins(app, "StateInspectorPlugin");
+        assert!(app.is_plugin_added::<EguiPlugin>());
 
         if !app.is_plugin_added::<DefaultInspectorConfigPlugin>() {
             app.add_plugins(DefaultInspectorConfigPlugin);
         }
-        if !app.is_plugin_added::<EguiPlugin>() {
-            app.add_plugins(EguiPlugin);
-        }
+        // if !app.is_plugin_added::<EguiPlugin>() {
+        //     app.add_plugins(EguiPlugin);
+        // }
         if !app.is_plugin_added::<InspectSchedulePlugin>() {
             app.add_plugins(InspectSchedulePlugin);
         }
@@ -364,13 +367,14 @@ impl<A> AssetInspectorPlugin<A> {
 impl<A: Asset + Reflect> Plugin for AssetInspectorPlugin<A> {
     fn build(&self, app: &mut bevy_app::App) {
         check_default_plugins(app, "AssetInspectorPlugin");
+        assert!(app.is_plugin_added::<EguiPlugin>());
 
         if !app.is_plugin_added::<DefaultInspectorConfigPlugin>() {
             app.add_plugins(DefaultInspectorConfigPlugin);
         }
-        if !app.is_plugin_added::<EguiPlugin>() {
-            app.add_plugins(EguiPlugin);
-        }
+        // if !app.is_plugin_added::<EguiPlugin>() {
+        //     app.add_plugins(EguiPlugin);
+        // }
         if !app.is_plugin_added::<InspectSchedulePlugin>() {
             app.add_plugins(InspectSchedulePlugin);
         }
@@ -449,13 +453,14 @@ where
 {
     fn build(&self, app: &mut bevy_app::App) {
         check_default_plugins(app, "FilterQueryInspectorPlugin");
+        assert!(app.is_plugin_added::<EguiPlugin>());
 
         if !app.is_plugin_added::<DefaultInspectorConfigPlugin>() {
             app.add_plugins(DefaultInspectorConfigPlugin);
         }
-        if !app.is_plugin_added::<EguiPlugin>() {
-            app.add_plugins(EguiPlugin);
-        }
+        // if !app.is_plugin_added::<EguiPlugin>() {
+        //     app.add_plugins(EguiPlugin);
+        // }
         if !app.is_plugin_added::<InspectSchedulePlugin>() {
             app.add_plugins(InspectSchedulePlugin);
         }

@@ -4,6 +4,9 @@ use bevy_inspector_egui::quick::AssetInspectorPlugin;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugins(bevy_egui::EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(AssetInspectorPlugin::<StandardMaterial>::default())
         .add_systems(Startup, setup)
         .run();

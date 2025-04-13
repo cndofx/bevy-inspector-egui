@@ -42,6 +42,9 @@ impl InspectorPrimitive for ToggleOption {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugins(bevy_egui::EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(ResourceInspectorPlugin::<Config>::new())
         .init_resource::<Config>()
         .register_type::<ToggleOption>()

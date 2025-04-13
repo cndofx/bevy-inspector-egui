@@ -11,6 +11,9 @@ fn main() {
         .insert_resource(ClearColor(Color::BLACK))
         .init_state::<AppState>()
         .register_type::<AppState>()
+        .add_plugins(bevy_egui::EguiPlugin {
+            enable_multipass_for_primary_context: false,
+        })
         .add_plugins(StateInspectorPlugin::<AppState>::default())
         .add_systems(OnEnter(AppState::A), set_color::<158, 228, 147>)
         .add_systems(OnEnter(AppState::B), set_color::<172, 200, 192>)
